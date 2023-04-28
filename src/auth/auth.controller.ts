@@ -13,6 +13,7 @@ export class AuthController {
   async login(@Body() userLoginDto: UserLoginDto) {
     const { email, password } = userLoginDto;
     const user = await this.userService.findOne(email);
+    console.log(user);
     return this.authService.login(user, password);
   }
 }

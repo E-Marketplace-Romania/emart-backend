@@ -14,6 +14,8 @@ import { DataSource } from 'typeorm';
 import { RoleModule } from './role/role.module';
 import { PermisionsModule } from './permissions/permisions.module';
 import { AuthModule } from './auth/auth.module';
+import { RolesGuard } from './auth/roles.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [

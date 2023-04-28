@@ -34,6 +34,11 @@ export class UserService {
   }
 
   findOne(email: string) {
-    return this.userRepository.findOneBy({ email });
+    return this.userRepository.findOne({
+      where: {
+        email: email,
+      },
+      relations: ['role'],
+    });
   }
 }
