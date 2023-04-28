@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { RoleModule } from './role/role.module';
 import { PermisionsModule } from './permissions/permisions.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { PermisionsModule } from './permissions/permisions.module';
     UserModule,
     RoleModule,
     PermisionsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

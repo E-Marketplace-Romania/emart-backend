@@ -3,6 +3,7 @@ import { Role } from 'src/role/entities/role.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -20,15 +21,17 @@ export class User {
   email: string;
   @Column({ nullable: false })
   password: string;
+  @Column({ nullable: false })
+  salt: string;
   @OneToMany(() => Rating, (rating) => rating.user)
   rated: Rating[];
+  @Column({ default: 0 })
   rating: number;
   @OneToMany(() => Rating, (rating) => rating.userRated)
   ratings: Rating[];
-  @OneToOne(() => Role, (role) => role.name)
+  @OneToOne(() => Role, (role) => role.name, { cascade: true })
+  @JoinColumn()
   role: Role;
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
 }
