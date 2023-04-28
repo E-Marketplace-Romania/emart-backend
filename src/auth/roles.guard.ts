@@ -14,7 +14,8 @@ export class RolesGuard implements CanActivate {
     private readonly reflector: Reflector,
     private readonly jwtService: JwtService,
   ) {}
-
+  // TODO: Implement functionality with roles and permissions comming from the database
+  // TODO: Extract Authorization into separate auth guard
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
@@ -44,7 +45,9 @@ export class RolesGuard implements CanActivate {
 
     const { user } = request;
     console.log(user);
-    return requiredRoles === user.role.name;
+    return typeof requiredRoles === 'string'
+      ? requiredRoles === user.role.name
+      : requiredRoles.some((role) => user.role.name === role);
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {

@@ -24,7 +24,7 @@ export class RoleController {
   }
 
   @Get()
-  @Roles('CUSTOMER')
+  @Roles('ADMIN')
   @UseGuards(RolesGuard)
   findAll() {
     return this.roleService.findAll();
