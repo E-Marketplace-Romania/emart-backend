@@ -1,10 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Type {
+export class Permission {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column({ unique: true, nullable: false })
+  @Column()
   name: string;
   @Column()
   description: string;

@@ -9,11 +9,39 @@ import { BrandModule } from './brand/brand.module';
 import { TypeModule } from './type/type.module';
 import { SubcategoryModule } from './subcategory/subcategory.module';
 import { CategoryModule } from './category/category.module';
-import { ListingModule } from './listing/listing.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { RoleModule } from './role/role.module';
+import { PermisionsModule } from './permissions/permisions.module';
 
 @Module({
-  imports: [ListingModule, CategoryModule, SubcategoryModule, TypeModule, BrandModule, BrandItemsModule, UserModule, RatingModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      database: 'emart',
+      username: 'root',
+      password: 'password',
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    ListingModule,
+    CategoryModule,
+    SubcategoryModule,
+    TypeModule,
+    BrandModule,
+    BrandItemsModule,
+    RatingModule,
+    UserModule,
+    RoleModule,
+    PermisionsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {
+    console.log('AppModule');
+  }
+}
