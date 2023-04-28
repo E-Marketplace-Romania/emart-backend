@@ -1,5 +1,12 @@
 import { Rating } from 'src/rating/entities/rating.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Role } from 'src/role/entities/role.entity';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -13,13 +20,13 @@ export class User {
   email: string;
   @Column({ nullable: false })
   password: string;
-  @Column({ nullable: false })
-  role: string;
   @OneToMany(() => Rating, (rating) => rating.user)
   rated: Rating[];
   rating: number;
   @OneToMany(() => Rating, (rating) => rating.userRated)
   ratings: Rating[];
+  @OneToOne(() => Role, (role) => role.name)
+  role: string;
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
   @Column({ default: () => 'CURRENT_TIMESTAMP' })

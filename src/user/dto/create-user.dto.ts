@@ -1,3 +1,5 @@
+import { Role } from 'src/role/entities/role.entity';
+
 export class CreateUserDto {
   email: string;
   password: string;
