@@ -26,7 +26,7 @@ export class User {
   @OneToMany(() => Rating, (rating) => rating.userRated)
   ratings: Rating[];
   @OneToOne(() => Role, (role) => role.name)
-  role: string;
+  role: Role;
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
