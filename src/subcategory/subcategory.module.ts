@@ -8,5 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [TypeOrmModule.forFeature([Subcategory])],
   controllers: [SubcategoryController],
   providers: [SubcategoryService],
+  exports: [SubcategoryService],
 })
 export class SubcategoryModule {}

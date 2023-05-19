@@ -16,6 +16,7 @@ import { PermisionsModule } from './permissions/permisions.module';
 import { AuthModule } from './auth/auth.module';
 import { RolesGuard } from './auth/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { ScraperModule } from './scraper/scraper.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { APP_GUARD } from '@nestjs/core';
     RoleModule,
     PermisionsModule,
     AuthModule,
+    ScraperModule,
   ],
   controllers: [AppController],
   providers: [AppService],

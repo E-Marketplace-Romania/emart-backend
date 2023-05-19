@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
+import { Subcategory } from './entities/subcategory.entity';
 
 @Injectable()
 export class SubcategoryService {
@@ -12,15 +13,15 @@ export class SubcategoryService {
     return `This action returns all subcategory`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subcategory`;
+  async findOne(id: string): Promise<Subcategory> {
+    return;
   }
 
-  update(id: number, updateSubcategoryDto: UpdateSubcategoryDto) {
+  update(id: string, updateSubcategoryDto: UpdateSubcategoryDto) {
     return `This action updates a #${id} subcategory`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} subcategory`;
   }
 }

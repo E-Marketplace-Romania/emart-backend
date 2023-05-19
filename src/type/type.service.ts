@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTypeDto } from './dto/create-type.dto';
 import { UpdateTypeDto } from './dto/update-type.dto';
+import { Type } from './entities/type.entity';
 
 @Injectable()
 export class TypeService {
@@ -12,15 +13,15 @@ export class TypeService {
     return `This action returns all type`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} type`;
+  async findOne(id: string): Promise<Type> {
+    return;
   }
 
-  update(id: number, updateTypeDto: UpdateTypeDto) {
+  update(id: string, updateTypeDto: UpdateTypeDto) {
     return `This action updates a #${id} type`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} type`;
   }
 }

@@ -1,3 +1,4 @@
+import { Listing } from 'src/listing/entities/listing.entity';
 import { Rating } from 'src/rating/entities/rating.entity';
 import { Role } from 'src/role/entities/role.entity';
 import {
@@ -29,6 +30,8 @@ export class User {
   rating: number;
   @OneToMany(() => Rating, (rating) => rating.userRated)
   ratings: Rating[];
+  @OneToMany(() => Listing, (listing) => listing.user)
+  listings: Listing[];
   @OneToOne(() => Role, (role) => role.name, { cascade: true })
   @JoinColumn()
   role: Role;
