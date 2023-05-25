@@ -1,7 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { PermisionsService } from './permisions.service';
 import { Permission } from './entities/permission.entity';
+import { Roles } from 'src/auth/roles.decorator';
+import { RolesGuard } from 'src/auth/roles.guard';
 
+@Roles(['ADMIN'])
+@UseGuards(RolesGuard)
 @Controller('permissions')
 export class PermisionsController {
   constructor(private readonly permisionsService: PermisionsService) {}

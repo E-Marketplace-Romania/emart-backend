@@ -14,8 +14,6 @@ import { DataSource } from 'typeorm';
 import { RoleModule } from './role/role.module';
 import { PermisionsModule } from './permissions/permisions.module';
 import { AuthModule } from './auth/auth.module';
-import { RolesGuard } from './auth/roles.guard';
-import { APP_GUARD } from '@nestjs/core';
 import { ScraperModule } from './scraper/scraper.module';
 
 @Module({
@@ -29,6 +27,7 @@ import { ScraperModule } from './scraper/scraper.module';
       password: 'password',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
+      logging: true,
     }),
     ListingModule,
     CategoryModule,

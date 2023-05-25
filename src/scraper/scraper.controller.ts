@@ -1,33 +1,82 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { ScraperService } from './scraper.service';
-import { CreateScraperDto } from './dto/create-scraper.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  DefaultValuePipe,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { ScraperService, OkaziiCategory, OlxCategory } from './scraper.service';
+import { Roles } from 'src/auth/roles.decorator';
 
 @Controller('scraper')
 export class ScraperController {
+  categoryMap = {
+    'placa-video': ['placi-video', 'placa-video'],
+    'placa-baza': ['placi-de-baza', 'placa-de-baza'],
+    surse: ['surse-pc', 'surse'],
+    'placa-de-sunet': ['placi-de-sunet', 'placa-de-sunet'],
+    'coolere-ventilatoare': [
+      'coolere-si-ventilatoare-pc',
+      'coolere-ventilatoare',
+    ],
+    carcase: ['carcase-pc', 'carcasa'],
+    procesor: ['procesoare', 'procesor'],
+    'memorie-ram': ['memorii-ram', 'memorie-ram'],
+    'hard-disk': ['hard-disk-uri', 'hard-disk'],
+    ssd: ['ssd'],
+  };
+
   constructor(private readonly scraperService: ScraperService) {}
 
-  @Post()
-  create(@Body() createScraperDto: CreateScraperDto) {
-    return this.scraperService.create(createScraperDto);
-  }
-
   @Get()
-  findAll() {
-    return this.scraperService.findAll();
+  findAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit = 20,
+    @Query('category') category = 'toate',
+  ) {
+    let categories: string[] = [];
+    if (category !== 'toate') {
+      categories = this.categoryMap[category];
+    }
+
+    console.log(categories);
+    console.log(category);
+
+    return this.scraperService.findAll(
+      {
+        page,
+        limit,
+        route: 'http://localhost:3000/scraper',
+      },
+      categories,
+    );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.scraperService.findOne(id);
+  @Roles(['ADMIN'])
+  @Post('scrape-olx')
+  scrape(@Body() body: { scrapePages: number; category: OlxCategory }) {
+    return this.scraperService.scrapeOlx(body.scrapePages, body.category);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.scraperService.remove(id);
+  @Roles(['ADMIN'])
+  @Post('scrape-okazii')
+  scrapeOkazii(
+    @Body() body: { scrapePages: number; category: OkaziiCategory },
+  ) {
+    return this.scraperService.scrapeOkazii(body.scrapePages, body.category);
   }
 
-  @Post('scrape')
-  scrape() {
-    return this.scraperService.scrapeOlx();
+  @Roles(['ADMIN'])
+  @Post('scrape-all')
+  scrapeAll() {
+    return this.scraperService.runScrapes();
+  }
+
+  @Roles(['ADMIN'])
+  @Post('correct-scrapes')
+  correctScrapes() {
+    return this.scraperService.correctSpecs();
   }
 }

@@ -4,24 +4,38 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 export class Scraper {
   @PrimaryColumn()
   id: string;
-  @Column()
+  @Column({ nullable: true })
   name: string;
-  @Column()
-  price: number;
-  @Column()
+  @Column({ nullable: true })
+  price: string;
+  @Column({ nullable: true })
   location: string;
-  @Column()
+  @Column({ nullable: true })
   category: string;
-  @Column()
+  @Column({ nullable: true })
   description: string;
-  @Column()
+  @Column({ nullable: true })
   url: string;
-  @Column()
+  @Column({ nullable: true })
   image: string;
-  @Column()
+  @Column({ nullable: true })
   platform: string;
-  @Column()
-  dateScraped: Date;
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+  @Column({ nullable: true })
+  postedAt: string;
+  @Column({ nullable: true })
+  memory: string;
+  @Column({ nullable: true })
+  storage: string;
+  @Column({ nullable: true })
+  make: string;
+  @Column({ nullable: true })
+  model: string;
+  @Column({ nullable: true })
+  powerSpec: string;
+  @Column({ nullable: true })
+  otherSpec: string;
+  @Column({ nullable: true })
+  memoryType: string;
 }
